@@ -16,6 +16,8 @@ swift test
 
 The protocol is `--model PATH --input PATH --output PATH`, in that order. The model may be a `.mlmodel` or compiled `.mlmodelc`. Input is an orientation-aware RGB image of at most 40 megapixels; the host normally provides an sRGB PNG with a 3000-pixel long edge. Output is a same-size 16-bit grayscale PNG: white means sky, black means excluded. The CLI exits 0 on success; failures exit 1 with a short stderr message. It neither accesses the network nor downloads models. `--version` prints its version and license. The caller controls temporary files, cancellation, and model selection.
 
+Before storing a model preference, a host can run `sashimi-sky --validate-model PATH` (available since 1.1.0). This compiles/loads the model and checks the required input/output shapes without an image or output file. It exits 0 on success, or 1 with a stderr error. Model validation and inference both stay in the helper process.
+
 ## Convert the reference model
 
 Create a Python environment with `numpy`, `onnx`, and `coremltools`. Obtain and unzip the upstream v1.0.6 [model archive](https://github.com/OpenDroneMap/SkyRemoval/releases/download/v1.0.6/model.zip) separately, observing its licensing terms.

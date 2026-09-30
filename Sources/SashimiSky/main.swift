@@ -5,7 +5,10 @@ import SkyMaskCore
 
 do {
     let args=Array(CommandLine.arguments.dropFirst())
-    if args == ["--version"] { print("sashimi-sky 1.0.0 (AGPL-3.0-or-later)"); exit(0) }
+    if args == ["--version"] { print("sashimi-sky 1.1.0 (AGPL-3.0-or-later)"); exit(0) }
+    if args.count==2,args[0]=="--validate-model" {
+        _ = try SkyMaskModel(url:URL(fileURLWithPath:args[1]));exit(0)
+    }
     guard args.count==6, args[0]=="--model",args[2]=="--input",args[4]=="--output" else {
         throw SkyError.invalidModel("Usage: sashimi-sky --model MODEL.mlmodel --input IMAGE.png --output MASK.png")
     }
